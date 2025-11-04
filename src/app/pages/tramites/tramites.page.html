@@ -1,0 +1,126 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Trámites</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Filter Toolbar -->
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selectedFilter" (ionChange)="onFilterChange($event)" scrollable>
+      <ion-segment-button *ngFor="let filter of filters" [value]="filter.value">
+        <ion-label>{{ filter.label }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull to Refresh -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="tramites-container">
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredTramites.length === 0">
+      <ion-icon name="folder-open-outline"></ion-icon>
+      <h2>No hay trámites</h2>
+      <p>No se encontraron trámites con este filtro</p>
+    </div>
+
+    <!-- Tramites List -->
+    <ion-card *ngFor="let tramite of filteredTramites" class="tramite-card">
+      <ion-card-header>
+        <div class="card-header-content">
+          <div class="icon-wrapper" [style.background-color]="'var(--ion-color-' + tramite.color + '-tint)'">
+            <ion-icon [name]="tramite.icon" [style.color]="'var(--ion-color-' + tramite.color + ')'"></ion-icon>
+          </div>
+          <div class="header-text">
+            <ion-card-title>{{ tramite.title }}</ion-card-title>
+            <ion-chip [color]="getStatusColor(tramite.status)" class="status-chip">
+              <ion-label>{{ getStatusText(tramite.status) }}</ion-label>
+            </ion-chip>
+          </div>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="description">{{ tramite.description }}</p>
+
+        <!-- Progress Bar for In-Progress Tramites -->
+        <div class="progress-section" *ngIf="tramite.status === 'en-proceso' && tramite.progress">
+          <div class="progress-header">
+            <span>Progreso</span>
+            <span class="progress-value">{{ tramite.progress }}%</span>
+          </div>
+          <ion-progress-bar [value]="tramite.progress / 100" [color]="tramite.color"></ion-progress-bar>
+        </div>
+
+        <!-- Info Row -->
+        <div class="info-row">
+          <div class="info-item">
+            <ion-icon name="time-outline"></ion-icon>
+            <span>{{ tramite.estimatedTime }}</span>
+          </div>
+          <div class="info-item" *ngIf="tramite.requiredDocuments && tramite.requiredDocuments.length > 0">
+            <ion-icon name="document-outline"></ion-icon>
+            <span>{{ tramite.requiredDocuments.length }} documentos</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <ion-button
+            expand="block"
+            [color]="tramite.color"
+            *ngIf="tramite.status === 'disponible'"
+            (click)="startTramite(tramite)">
+            <ion-icon slot="start" name="play-circle-outline"></ion-icon>
+            Iniciar Trámite
+          </ion-button>
+
+          <ion-button
+            expand="block"
+            fill="outline"
+            (click)="viewDetails(tramite)">
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            Ver Detalles
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<!-- Bottom Tab Navigation -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment value="tramites">
+      <ion-segment-button value="id-card" (click)="navigateTo('id-card')">
+        <ion-icon name="card"></ion-icon>
+        <ion-label>Mi ID</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="news" (click)="navigateTo('news')">
+        <ion-icon name="newspaper"></ion-icon>
+        <ion-label>Noticias</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tramites">
+        <ion-icon name="document-text"></ion-icon>
+        <ion-label>Trámites</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="profile" (click)="navigateTo('profile')">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

@@ -146,6 +146,13 @@ export class NewsPage implements OnInit {
   }
 
   /**
+   * Navega a otra página
+   */
+  navigateTo(page: string) {
+    this.router.navigate([`/${page}`]);
+  }
+
+  /**
    * Cierra sesión
    */
   onLogout() {

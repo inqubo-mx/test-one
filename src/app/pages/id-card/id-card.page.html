@@ -102,6 +102,9 @@
 <!-- Bottom Tab Navigation -->
 <ion-footer>
   <ion-toolbar>
+<!-- Bottom Tab Navigation -->
+<ion-footer>
+  <ion-toolbar>
     <ion-segment value="id-card">
       <ion-segment-button value="id-card">
         <ion-icon name="card"></ion-icon>
@@ -110,6 +113,14 @@
       <ion-segment-button value="news" (click)="goToNews()">
         <ion-icon name="newspaper"></ion-icon>
         <ion-label>Noticias</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tramites" (click)="navigateTo('tramites')">
+        <ion-icon name="document-text"></ion-icon>
+        <ion-label>Trámites</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="profile" (click)="navigateTo('profile')">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>Perfil</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

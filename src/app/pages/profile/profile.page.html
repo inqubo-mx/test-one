@@ -1,0 +1,142 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile-container" *ngIf="user">
+    <!-- User Profile Header -->
+    <div class="profile-header">
+      <div class="avatar-wrapper">
+        <img [src]="user.photo" [alt]="user.name" />
+        <ion-button class="edit-avatar-btn" fill="clear" size="small">
+          <ion-icon name="camera" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+      <h2>{{ user.name }}</h2>
+      <p>{{ user.email }}</p>
+      <ion-button expand="block" fill="outline" (click)="editProfile()">
+        <ion-icon slot="start" name="create-outline"></ion-icon>
+        Editar Perfil
+      </ion-button>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="settings-section">
+      <h3>Configuración</h3>
+
+      <!-- Biometric Setting -->
+      <ion-item *ngIf="biometricAvailable">
+        <ion-icon name="finger-print" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Face ID</h3>
+          <p>Usa Face ID para iniciar sesión</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="biometricEnabled" (ionChange)="onBiometricToggle($event)"></ion-toggle>
+      </ion-item>
+
+      <!-- Notifications Setting -->
+      <ion-item>
+        <ion-icon name="notifications" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Notificaciones</h3>
+          <p>Recibir notificaciones push</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="notificationsEnabled" (ionChange)="onNotificationsToggle($event)"></ion-toggle>
+      </ion-item>
+
+      <!-- Dark Mode Setting -->
+      <ion-item>
+        <ion-icon name="moon" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Modo Oscuro</h3>
+          <p>Tema oscuro para la interfaz</p>
+        </ion-label>
+        <ion-toggle [(ngModel)]="darkModeEnabled" (ionChange)="onDarkModeToggle($event)"></ion-toggle>
+      </ion-item>
+    </div>
+
+    <!-- Account Section -->
+    <div class="account-section">
+      <h3>Cuenta y Privacidad</h3>
+
+      <ion-item button (click)="viewActivity()">
+        <ion-icon name="time" slot="start" color="secondary"></ion-icon>
+        <ion-label>
+          <h3>Historial de Actividad</h3>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="viewDocuments()">
+        <ion-icon name="folder" slot="start" color="secondary"></ion-icon>
+        <ion-label>
+          <h3>Mis Documentos</h3>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="privacySettings()">
+        <ion-icon name="lock-closed" slot="start" color="secondary"></ion-icon>
+        <ion-label>
+          <h3>Privacidad y Seguridad</h3>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+
+    <!-- Support Section -->
+    <div class="support-section">
+      <h3>Soporte</h3>
+
+      <ion-item button (click)="helpSupport()">
+        <ion-icon name="help-circle" slot="start" color="tertiary"></ion-icon>
+        <ion-label>
+          <h3>Ayuda y Soporte</h3>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="aboutApp()">
+        <ion-icon name="information-circle" slot="start" color="tertiary"></ion-icon>
+        <ion-label>
+          <h3>Acerca de Digital ID</h3>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="logout-section">
+      <ion-button expand="block" color="danger" (click)="onLogout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Cerrar Sesión
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Bottom Tab Navigation -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment value="profile">
+      <ion-segment-button value="id-card" (click)="navigateTo('id-card')">
+        <ion-icon name="card"></ion-icon>
+        <ion-label>Mi ID</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="news" (click)="navigateTo('news')">
+        <ion-icon name="newspaper"></ion-icon>
+        <ion-label>Noticias</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tramites" (click)="navigateTo('tramites')">
+        <ion-icon name="document-text"></ion-icon>
+        <ion-label>Trámites</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="profile">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>Perfil</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,212 @@
+.tramites-container {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+.tramite-card {
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  .card-header-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    .icon-wrapper {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon {
+        font-size: 28px;
+      }
+    }
+
+    .header-text {
+      flex: 1;
+
+      ion-card-title {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 8px;
+        color: var(--ion-color-dark);
+      }
+
+      .status-chip {
+        height: 24px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  ion-card-content {
+    .description {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ion-color-step-600);
+      margin-bottom: 16px;
+    }
+
+    .progress-section {
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--ion-color-light);
+      border-radius: 8px;
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ion-color-dark);
+
+        .progress-value {
+          color: var(--ion-color-primary);
+        }
+      }
+
+      ion-progress-bar {
+        height: 8px;
+        border-radius: 4px;
+      }
+    }
+
+    .info-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--ion-color-medium);
+
+        ion-icon {
+          font-size: 18px;
+          color: var(--ion-color-primary);
+        }
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+
+      ion-button {
+        --border-radius: 8px;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 40px 20px;
+
+  ion-icon {
+    font-size: 80px;
+    color: var(--ion-color-light-shade);
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+    margin: 0 0 10px 0;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--ion-color-medium-shade);
+    margin: 0;
+  }
+}
+
+// Filter Segment
+ion-toolbar {
+  ion-segment {
+    --background: var(--ion-color-light);
+    padding: 8px;
+
+    ion-segment-button {
+      --indicator-color: var(--ion-color-primary);
+      --color-checked: var(--ion-color-primary-contrast);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: none;
+      min-width: 80px;
+    }
+  }
+}
+
+// Footer Navigation
+ion-footer {
+  ion-toolbar {
+    --background: white;
+    --border-width: 1px 0 0 0;
+    --border-color: var(--ion-color-light-shade);
+
+    ion-segment {
+      --background: transparent;
+      padding: 0;
+
+      ion-segment-button {
+        --indicator-color: transparent;
+        --color: var(--ion-color-medium);
+        --color-checked: var(--ion-color-primary);
+        flex-direction: column;
+        padding: 8px 0;
+        font-size: 10px;
+
+        ion-icon {
+          font-size: 24px;
+          margin-bottom: 4px;
+        }
+
+        ion-label {
+          font-size: 11px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// Animation for cards
+.tramite-card {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

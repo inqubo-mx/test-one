@@ -71,6 +71,13 @@ export class IdCardPage implements OnInit, OnDestroy {
   }
 
   /**
+   * Navega a otra página
+   */
+  navigateTo(page: string) {
+    this.router.navigate([`/${page}`]);
+  }
+
+  /**
    * Formatea el tiempo restante en formato MM:SS
    */
   formatTime(seconds: number): string {
