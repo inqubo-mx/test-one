@@ -1,0 +1,95 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Noticias</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Filter Toolbar -->
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selectedCategory" (ionChange)="onCategoryChange($event)" scrollable>
+      <ion-segment-button *ngFor="let cat of categories" [value]="cat.value">
+        <ion-label>{{ cat.label }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull to Refresh -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="news-container">
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredNews.length === 0">
+      <ion-icon name="newspaper-outline"></ion-icon>
+      <h2>No hay noticias</h2>
+      <p>No se encontraron noticias en esta categoría</p>
+    </div>
+
+    <!-- News Cards -->
+    <ion-card *ngFor="let article of filteredNews" class="news-card">
+      <!-- Image -->
+      <img [src]="article.imageUrl" [alt]="article.title" />
+
+      <!-- Category Badge -->
+      <ion-chip class="category-chip" [color]="getCategoryColor(article.category)">
+        <ion-icon [name]="getCategoryIcon(article.category)"></ion-icon>
+        <ion-label>{{ getCategoryLabel(article.category) }}</ion-label>
+      </ion-chip>
+
+      <ion-card-header>
+        <ion-card-subtitle>
+          <ion-icon name="calendar-outline"></ion-icon>
+          {{ formatDate(article.date) }}
+          <span class="separator">•</span>
+          <ion-icon name="time-outline"></ion-icon>
+          {{ article.readTime }} min lectura
+        </ion-card-subtitle>
+        <ion-card-title>{{ article.title }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="summary">{{ article.summary }}</p>
+        <p class="content">{{ article.content }}</p>
+        <div class="author">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <span>{{ article.author }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Floating Action Button to go to ID Card -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="goToIdCard()">
+      <ion-icon name="card-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<!-- Bottom Tab Navigation -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment value="news">
+      <ion-segment-button value="id-card" (click)="goToIdCard()">
+        <ion-icon name="card"></ion-icon>
+        <ion-label>Mi ID</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="news">
+        <ion-icon name="newspaper"></ion-icon>
+        <ion-label>Noticias</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

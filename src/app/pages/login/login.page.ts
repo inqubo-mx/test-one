@@ -28,9 +28,9 @@ export class LoginPage implements OnInit {
     this.biometricAvailable = await this.authService.isBiometricAvailable();
     this.biometricEnabled = this.authService.isBiometricEnabled();
 
-    // Si el usuario ya está autenticado, redirigir al ID card
+    // Si el usuario ya está autenticado, redirigir a noticias
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/id-card']);
+      this.router.navigate(['/news']);
     }
   }
 
@@ -57,8 +57,8 @@ export class LoginPage implements OnInit {
         await this.askEnableBiometric();
       }
 
-      // Navegar a la página del ID card
-      this.router.navigate(['/id-card']);
+      // Navegar a la página de noticias
+      this.router.navigate(['/news']);
     } catch (error) {
       await loading.dismiss();
       await this.showAlert('Error', 'Usuario o contraseña incorrectos');
@@ -77,7 +77,7 @@ export class LoginPage implements OnInit {
     try {
       await this.authService.authenticateWithBiometric();
       await loading.dismiss();
-      this.router.navigate(['/id-card']);
+      this.router.navigate(['/news']);
     } catch (error) {
       await loading.dismiss();
       await this.showAlert('Error', error as string);

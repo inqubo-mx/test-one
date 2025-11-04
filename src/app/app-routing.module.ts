@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'id-card',
     loadChildren: () => import('./pages/id-card/id-card.module').then( m => m.IdCardPageModule)
   },
+  {
+    path: 'news',
+    loadChildren: () => import('./pages/news/news.module').then( m => m.NewsPageModule)
+  },
 ];
 
 @NgModule({

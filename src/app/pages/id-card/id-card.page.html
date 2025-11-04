@@ -98,3 +98,19 @@
     </ion-card>
   </div>
 </ion-content>
+
+<!-- Bottom Tab Navigation -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment value="id-card">
+      <ion-segment-button value="id-card">
+        <ion-icon name="card"></ion-icon>
+        <ion-label>Mi ID</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="news" (click)="goToNews()">
+        <ion-icon name="newspaper"></ion-icon>
+        <ion-label>Noticias</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

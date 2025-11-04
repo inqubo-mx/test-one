@@ -64,6 +64,13 @@ export class IdCardPage implements OnInit, OnDestroy {
   }
 
   /**
+   * Navega a la página de noticias
+   */
+  goToNews() {
+    this.router.navigate(['/news']);
+  }
+
+  /**
    * Formatea el tiempo restante en formato MM:SS
    */
   formatTime(seconds: number): string {
