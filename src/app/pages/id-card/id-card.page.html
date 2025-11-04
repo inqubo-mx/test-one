@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Mi Identificación Digital</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="id-card-container" *ngIf="user">
+    <!-- Digital ID Card -->
+    <div class="id-card">
+      <!-- Card Header -->
+      <div class="card-header">
+        <h2>IDENTIFICACIÓN OFICIAL</h2>
+        <p>Digital ID Card</p>
+      </div>
+
+      <!-- User Photo -->
+      <div class="photo-section">
+        <div class="photo-frame">
+          <img [src]="user.photo" [alt]="user.name" />
+        </div>
+      </div>
+
+      <!-- User Information -->
+      <div class="user-info">
+        <div class="info-row">
+          <span class="label">Nombre:</span>
+          <span class="value">{{ user.name }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Usuario:</span>
+          <span class="value">{{ user.username }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">ID:</span>
+          <span class="value">{{ user.id }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Email:</span>
+          <span class="value">{{ user.email }}</span>
+        </div>
+      </div>
+
+      <!-- QR Code Section -->
+      <div class="qr-section">
+        <div class="qr-header">
+          <ion-icon name="qr-code-outline"></ion-icon>
+          <span>Código de Verificación</span>
+        </div>
+
+        <div class="qr-code-wrapper">
+          <qrcode
+            [qrdata]="(qrData$ | async) || ''"
+            [width]="220"
+            [errorCorrectionLevel]="'M'"
+            [margin]="2"
+          ></qrcode>
+        </div>
+
+        <!-- Time Remaining -->
+        <div class="qr-timer">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>Renueva en: {{ formatTime((timeRemaining$ | async) || 0) }}</span>
+        </div>
+
+        <ion-note class="qr-note">
+          Este código se actualiza automáticamente cada 2 minutos para mayor seguridad
+        </ion-note>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <span>Verificado y Seguro</span>
+      </div>
+    </div>
+
+    <!-- Additional Info Card -->
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-subtitle>Información Importante</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>
+          <ion-icon name="information-circle-outline"></ion-icon>
+          Este código QR es tu identificación digital única y se actualiza automáticamente.
+        </p>
+        <p>
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          Mantén esta información segura y no la compartas con terceros no autorizados.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

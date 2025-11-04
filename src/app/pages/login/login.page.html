@@ -1,0 +1,87 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Digital ID</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="login-container">
+    <!-- Logo / Header -->
+    <div class="header-section">
+      <ion-icon name="finger-print-outline" class="logo-icon"></ion-icon>
+      <h1>Bienvenido</h1>
+      <p>Ingresa a tu identificación digital</p>
+    </div>
+
+    <!-- Login Form -->
+    <form class="login-form" (ngSubmit)="onLogin()">
+      <!-- Username Input -->
+      <ion-item lines="full" class="input-item">
+        <ion-label position="floating">Usuario</ion-label>
+        <ion-input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          autocomplete="username"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <!-- Password Input -->
+      <ion-item lines="full" class="input-item">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          required
+        ></ion-input>
+        <ion-button
+          slot="end"
+          fill="clear"
+          (click)="togglePasswordVisibility()"
+          type="button"
+        >
+          <ion-icon
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          ></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <!-- Login Button -->
+      <ion-button
+        expand="block"
+        type="submit"
+        color="primary"
+        class="login-button"
+      >
+        <ion-icon slot="start" name="log-in-outline"></ion-icon>
+        Iniciar Sesión
+      </ion-button>
+    </form>
+
+    <!-- Divider -->
+    <div class="divider" *ngIf="biometricAvailable && biometricEnabled">
+      <span>o</span>
+    </div>
+
+    <!-- Face ID Button -->
+    <ion-button
+      *ngIf="biometricAvailable && biometricEnabled"
+      expand="block"
+      fill="outline"
+      color="secondary"
+      class="biometric-button"
+      (click)="onBiometricLogin()"
+    >
+      <ion-icon slot="start" name="scan-circle-outline"></ion-icon>
+      Ingresar con Face ID
+    </ion-button>
+
+    <!-- Info message for first time users -->
+    <ion-note *ngIf="biometricAvailable && !biometricEnabled" class="info-note">
+      Después de iniciar sesión podrás habilitar Face ID
+    </ion-note>
+  </div>
+</ion-content>

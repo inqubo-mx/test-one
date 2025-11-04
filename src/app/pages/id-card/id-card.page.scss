@@ -1,0 +1,231 @@
+.id-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.id-card {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  // Efecto de patrón de fondo
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 25px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 15px;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0 0 5px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  p {
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+}
+
+.photo-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  .photo-frame {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: white;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.user-info {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      font-weight: 600;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .value {
+      font-weight: 400;
+      font-size: 13px;
+      text-align: right;
+    }
+  }
+}
+
+.qr-section {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 15px;
+
+  .qr-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    color: var(--ion-color-primary);
+    font-weight: 600;
+    font-size: 14px;
+
+    ion-icon {
+      font-size: 20px;
+    }
+  }
+
+  .qr-code-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+
+    qrcode {
+      display: block;
+    }
+  }
+
+  .qr-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--ion-color-secondary);
+    font-size: 15px;
+    margin-bottom: 10px;
+
+    ion-icon {
+      font-size: 18px;
+    }
+  }
+
+  .qr-note {
+    display: block;
+    font-size: 11px;
+    color: var(--ion-color-medium);
+    line-height: 1.4;
+  }
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 15px;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.9;
+
+  ion-icon {
+    font-size: 18px;
+    color: #4ade80;
+  }
+}
+
+.info-card {
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  ion-card-content {
+    p {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      ion-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+        margin-top: 2px;
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+}
+
+// Animación para el QR cuando se actualiza
+@keyframes qr-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.qr-code-wrapper {
+  animation: qr-pulse 0.5s ease-in-out;
+}
