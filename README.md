@@ -1,12 +1,12 @@
-# Digital ID App - Aplicación de Identificación Digital para iPhone
+# Digital ID App - Aplicación de Identificación Digital
 
-Una aplicación móvil para iPhone construida con Ionic Angular que proporciona una identificación digital segura con autenticación biométrica (Face ID) y código QR dinámico.
+Una aplicación móvil multiplataforma (iOS y Android) construida con Ionic Angular que proporciona una identificación digital segura con autenticación biométrica (Face ID / Fingerprint) y código QR dinámico.
 
 ## Características
 
 ### 1. Autenticación Segura
 - Login con usuario y contraseña
-- Soporte para Face ID / Touch ID de iPhone
+- Soporte para autenticación biométrica (Face ID / Touch ID en iOS, Fingerprint en Android)
 - Almacenamiento seguro de credenciales
 - Opción para habilitar/deshabilitar autenticación biométrica
 
@@ -29,15 +29,25 @@ Antes de comenzar, asegúrate de tener instalado:
 
 - **Node.js** (v14 o superior)
 - **npm** (v6 o superior)
-- **Xcode** (versión más reciente) - Solo para compilar para iOS
-- **CocoaPods** - Para dependencias de iOS
 - **Ionic CLI** - Se instalará automáticamente si usas npx
 
-### Instalación de CocoaPods (macOS)
+### Para desarrollo en iOS
+
+- **Xcode** (versión más reciente) - Requerido solo en macOS
+- **CocoaPods** - Para dependencias de iOS
+
+#### Instalación de CocoaPods (macOS)
 
 ```bash
 sudo gem install cocoapods
 ```
+
+### Para desarrollo en Android
+
+- **Android Studio** (versión más reciente)
+- **Android SDK** (API level 24 o superior)
+- **Java Development Kit (JDK)** - Versión 17 recomendada
+- **Gradle** - Se instala automáticamente con Android Studio
 
 ## Instalación
 
@@ -106,6 +116,44 @@ npx cap open ios
 
 **Nota:** Para probar Face ID, necesitas un dispositivo físico. Face ID no funciona en el simulador.
 
+### Ejecutar en Android Emulator
+
+1. Compilar la aplicación:
+```bash
+npm run build
+```
+
+2. Sincronizar con Android:
+```bash
+npx cap sync android
+```
+
+3. Abrir en Android Studio:
+```bash
+npx cap open android
+```
+
+4. En Android Studio:
+   - Espera a que Gradle termine de sincronizar
+   - Selecciona un emulador Android (o crea uno desde AVD Manager)
+   - Presiona el botón de Run (▶️) para compilar y ejecutar
+
+### Ejecutar en dispositivo Android físico
+
+1. Habilita las opciones de desarrollador en tu dispositivo Android:
+   - Ve a Ajustes > Acerca del teléfono
+   - Toca "Número de compilación" 7 veces
+   - Vuelve a Ajustes > Opciones de desarrollador
+   - Activa "Depuración USB"
+
+2. Conecta tu dispositivo Android al ordenador mediante cable USB
+
+3. En Android Studio:
+   - Selecciona tu dispositivo en el dropdown superior
+   - Presiona Run (▶️) para instalar en el dispositivo
+
+**Nota:** Para probar autenticación biométrica (huella digital), necesitas un dispositivo físico con sensor de huellas configurado.
+
 ## Estructura del Proyecto
 
 ```
@@ -116,15 +164,30 @@ src/
 │   │   │   ├── login.page.ts
 │   │   │   ├── login.page.html
 │   │   │   └── login.page.scss
-│   │   └── id-card/            # Página de tarjeta de ID
-│   │       ├── id-card.page.ts
-│   │       ├── id-card.page.html
-│   │       └── id-card.page.scss
+│   │   ├── id-card/            # Página de tarjeta de ID
+│   │   │   ├── id-card.page.ts
+│   │   │   ├── id-card.page.html
+│   │   │   └── id-card.page.scss
+│   │   ├── news/               # Página de noticias
+│   │   │   ├── news.page.ts
+│   │   │   ├── news.page.html
+│   │   │   └── news.page.scss
+│   │   ├── tramites/           # Página de trámites
+│   │   │   ├── tramites.page.ts
+│   │   │   ├── tramites.page.html
+│   │   │   └── tramites.page.scss
+│   │   └── profile/            # Página de perfil
+│   │       ├── profile.page.ts
+│   │       ├── profile.page.html
+│   │       └── profile.page.scss
 │   ├── services/
 │   │   ├── auth.ts             # Servicio de autenticación
-│   │   └── qr-generator.ts     # Servicio de generación de QR
+│   │   ├── qr-generator.ts     # Servicio de generación de QR
+│   │   ├── news.ts             # Servicio de noticias
+│   │   └── tramites.ts         # Servicio de trámites
 │   └── app-routing.module.ts   # Configuración de rutas
 ├── ios/                        # Proyecto nativo de iOS
+├── android/                    # Proyecto nativo de Android
 └── capacitor.config.ts         # Configuración de Capacitor
 ```
 
@@ -201,10 +264,16 @@ Antes de publicar en el App Store:
 npm start              # Inicia servidor de desarrollo
 npm run build          # Compila la aplicación
 
-# Capacitor
-npx cap sync           # Sincroniza código web con plataformas nativas
+# Capacitor - General
+npx cap sync           # Sincroniza código web con todas las plataformas
+
+# Capacitor - iOS
 npx cap open ios       # Abre proyecto en Xcode
 npx cap sync ios       # Sincroniza solo iOS
+
+# Capacitor - Android
+npx cap open android   # Abre proyecto en Android Studio
+npx cap sync android   # Sincroniza solo Android
 
 # Testing
 npm test              # Ejecuta tests (si están configurados)
@@ -219,11 +288,20 @@ npm test              # Ejecuta tests (si están configurados)
 - **RxJS** - Programación reactiva
 - **TypeScript** - Lenguaje de programación
 
-## Permisos de iOS
+## Permisos
 
-La aplicación requiere los siguientes permisos (ya configurados en `Info.plist`):
+### iOS
+
+La aplicación requiere los siguientes permisos (ya configurados en `ios/App/App/Info.plist`):
 
 - **NSFaceIDUsageDescription**: Para usar Face ID en autenticación
+
+### Android
+
+La aplicación requiere los siguientes permisos (ya configurados en `android/app/src/main/AndroidManifest.xml`):
+
+- **INTERNET**: Para conectar con servicios web
+- **USE_BIOMETRIC**: Para usar autenticación biométrica (huella digital, reconocimiento facial)
 
 ## Solución de Problemas
 
@@ -247,16 +325,36 @@ npm install
 npx cap sync
 ```
 
+### Error al compilar para Android
+**Solución:**
+1. Asegúrate de tener Android Studio instalado y actualizado
+2. Verifica que Android SDK esté instalado (desde SDK Manager en Android Studio)
+3. Ejecuta `npx cap sync android` antes de abrir Android Studio
+4. Limpia el build en Android Studio: Build > Clean Project > Rebuild Project
+
+### Gradle sync failed en Android
+**Solución:**
+1. Verifica tu conexión a internet
+2. En Android Studio: File > Invalidate Caches / Restart
+3. Borra la carpeta `.gradle` en tu directorio home y vuelve a sincronizar
+
+### La autenticación biométrica no funciona en Android
+**Solución:**
+- En emulador: Ve a Settings > Security > Fingerprint y configura una huella digital virtual
+- En dispositivo físico: Asegúrate de tener configurado al menos un método biométrico en los ajustes del dispositivo
+
 ## Próximas Mejoras
 
 - [ ] Integración con API backend real
-- [ ] Soporte para Touch ID
+- [ ] Plugin real de autenticación biométrica
 - [ ] Modo offline
 - [ ] Sincronización en la nube
 - [ ] Múltiples tarjetas de ID
 - [ ] Exportar/compartir tarjeta
-- [ ] Tema oscuro/claro
+- [ ] Mejora del tema oscuro
 - [ ] Soporte multiidioma
+- [ ] Push notifications
+- [ ] Análisis y estadísticas de uso
 
 ## Licencia
 
